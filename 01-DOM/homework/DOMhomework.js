@@ -8,7 +8,9 @@ let toDoItems = [];
 // agregar tu nombre al final del texto actual. Ej: 'Aplicación creada por Franco'
 // Tu código acá:
 
-document.querySelector("#createdBy").innerHTML = `Aplicación creada por Johan`;
+var span = document.querySelector("#createdBy");
+
+span.innerHTML = span.innerHTML + ` Johan`;
 
 // Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
 // con el nombre 'description' que será justamente la descripción del ToDo.
@@ -30,7 +32,7 @@ function ToDo(description) {
 // Tu código acá:
 
 ToDo.prototype.completeToDo = function () {
-  this.complete = true;
+  this.complete = !this.complete;
 };
 
 // Agregar dos parámetros a la función 'buildToDo':
@@ -55,15 +57,15 @@ function buildToDo(todo, index) {
   // con este comando se crea una etiqueta
   let toDoShell = document.createElement("div");
   // con la propiedad classList.add se agrega una clase al objeto seleccionado como objetivo
-  toDoShell.classList.add("toDoShell");
+  toDoShell.className = "toDoShell";
   // se crea el elemento span con la propiedad document.createElement();
   let toDoText = document.createElement(`span`);
   // ahora al span creado previamente, se le da el contenido de la descripcion del elemento tipo ToDo.
   toDoText.innerHTML = todo.description;
   // ahora a toDoText se le asigna la clase que este contenida en la variable index.
-  toDoText.classList.add(index);
+  toDoText.setAttribute("id", index);
   // ahora se pregunta si todo.complete es verdadero, de ser asi, se le asigna la clase  a toDoText de completeText.
-  if (todo.complete === true) toDoText.classList.add("completeText");
+  if (todo.complete === true) toDoText.className = "completeText";
   // se le asigna como hijo a toDoShell la variable creada previamente (toDoText)
   toDoShell.appendChild(toDoText);
   // se retorna toDoShell.
@@ -77,6 +79,8 @@ function buildToDo(todo, index) {
 
 function buildToDos(toDos) {
   // Tu código acá:
+  return toDos.map((elem, index) => buildToDo(elem, index));
+  // return toDos.map(buildToDo);
 }
 
 // La función 'displayToDos' se va a encargar de que se vean los toDo's en pantalla
@@ -90,6 +94,9 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
+  var toDoContainer = document.getElementById(`toDoContainer`).value
+  toDoContainer.innerHTML = "";
+
 }
 
 // La función 'addToDo' agregará un nuevo ToDo al array 'toDoItems'
