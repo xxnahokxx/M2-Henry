@@ -65,10 +65,11 @@ function buildToDo(todo, index) {
   // ahora a toDoText se le asigna la clase que este contenida en la variable index.
   toDoText.setAttribute("id", index);
   // ahora se pregunta si todo.complete es verdadero, de ser asi, se le asigna la clase  a toDoText de completeText.
-  if (todo.complete === true) toDoText.className = "completeText";
+  if (todo.complete) toDoText.className = "completeText";
   // se le asigna como hijo a toDoShell la variable creada previamente (toDoText)
   toDoShell.appendChild(toDoText);
   // se retorna toDoShell.
+  toDoText.addEventListener("click", completeToDo);
   return toDoShell;
 }
 
@@ -79,6 +80,7 @@ function buildToDo(todo, index) {
 
 function buildToDos(toDos) {
   // Tu código acá:
+  // por medio de esta linea se puede hacer una iteracion del elemento ToDos con la propiedad map, y se le indica que los elementos encontrados en cada propiedad se deben utilizar en la funcion buildToDo().
   return toDos.map((elem, index) => buildToDo(elem, index));
   // return toDos.map(buildToDo);
 }
@@ -94,9 +96,16 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
-  var toDoContainer = document.getElementById(`toDoContainer`).value
+  // se selecciona un elemento por medio de la propiedad getElementById(), cuyo id es el que se indica en medio los parentesis, y este elemento se almacenaria en la variable toDoContainer.
+  var toDoContainer = document.getElementById(`toDoContainer`);
+  // con la linea a continuación, se cambia al valor del elemento almacenado en la variable toDoContainer, y se le asignaria el valor "".
   toDoContainer.innerHTML = "";
-
+  //se alamacena buildToDos(toDoItems) en la variable result.
+  let result = buildToDos(toDoItems);
+  //se hace una iteracion para insertar cada uno de los elementos creados en el contenedor.
+  result.forEach((element) => {
+    toDoContainer.appendChild(element);
+  });
 }
 
 // La función 'addToDo' agregará un nuevo ToDo al array 'toDoItems'
@@ -110,6 +119,14 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
+  let etiquetaToDoInput = document.getElementById("toDoInput");
+  let number = isNaN(Number(etiquetaToDoInput));
+  console.log(number);
+  if (number) console.log("es diferente de numero");
+  let todo = new ToDo(etiquetaToDoInput.value);
+  toDoItems.push(todo);
+  etiquetaToDoInput.value = "";
+  displayToDos();
 }
 
 // Agregar un 'Event Listener' para que cada vez que el botón 'AGREGAR' sea clickeado
@@ -118,6 +135,9 @@ function addToDo() {
 //   2) Agregarle un 'click' event listener, pasándole la función 'addToDo' como callback
 
 // Tu código acá:
+
+let button = document.getElementById(`addButton`);
+button.addEventListener("click", addToDo);
 
 // La función completeToDo se va a ejecutar cuando queramos completar un todo
 // [NOTA: Algunas cuestiones a tener en cuenta
@@ -133,8 +153,11 @@ function addToDo() {
 
 function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
-  //const index = event.target.id;
+  const index = event.target.id;
   // Tu código acá:
+  toDoItems[index].completeToDo();
+  // toDoItems --> [{desc : "barrer", comp: false},{desc : "trapear", comp: true}, {desc : "cocinar", comp: false}]
+  displayToDos();
 }
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen

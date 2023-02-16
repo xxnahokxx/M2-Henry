@@ -9,7 +9,7 @@
     }
 
     p {
-      padding:0 15px;
+      padding: 0 15px;
     }
 
   }
@@ -24,6 +24,15 @@
       margin: 20px 2.5%;
       border-radius: 20px;
       height: 100%;
+    }
+
+    @media @phone {
+      .tecnologia, .ondas {
+        display: none;
+      }
+      .auricular {
+        width: 100%;
+      }
     }
   }
 
@@ -58,17 +67,39 @@
       }
 
       .btn {
+        .btn-black(@btn-bg-color , @wild-sand);
+      }
+
+      .actual-img {
+        width: 46%;
+        margin-left: 4%;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: 10px;
+        }
       }
     }
-
-    .actual-img {
-      width: 46%;
-      margin-left: 4%;
-
-      img {
+    @media @phone {
+      padding: .5rem;
+      flex-wrap: wrap;
+      .actual-text {
+        order: 1;
         width: 100%;
-        height: auto;
-        border-radius: 10px;
+      }
+      .actual-img {
+        order: 0;
+        width: 100%;
+        img {
+          border-radius: 1.5rem;
+          width: 100%;
+        }
+      }
+      .btn {
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
       }
     }
   }

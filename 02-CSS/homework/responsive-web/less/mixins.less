@@ -1,1 +1,16 @@
 // Mixins acá
+.btn-black (@bg, @color-font) {
+    display: inline-block;
+    background-color: @bg;
+    padding: 10px;
+    color: @color-font;
+    border-radius: 10px;
+    font-size: 15px;
+
+    &:hover {
+        transition: 1s;
+        background-color: @color-font;
+        color: @bg;
+        border: 1px solid black;
+    }
+}
